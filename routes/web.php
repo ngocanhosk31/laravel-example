@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\CategoriesController;
 use PhpParser\Node\Expr\Cast;
+use App\Http\Controllers\admin\Dashboard;
 
 
 /*
@@ -60,5 +61,6 @@ Route::prefix('categories')->group(function () {
 
 // admin route
 Route::prefix('admin')->group(function () {
+    Route::get('/', [Dashboard::class, 'index']);
     Route::resource('products', ProductsController::class);
 });
