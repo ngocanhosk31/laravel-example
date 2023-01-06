@@ -8,4 +8,9 @@
     <?php echo csrf_field(); ?>
     <!-- <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> -->
 </form>
-alo
+
+
+
+
+
+hu
