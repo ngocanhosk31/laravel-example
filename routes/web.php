@@ -62,5 +62,5 @@ Route::prefix('categories')->group(function () {
 // admin route
 Route::prefix('admin')->group(function () {
     Route::get('/', [Dashboard::class, 'index']);
-    Route::resource('products', ProductsController::class);
+    Route::middleware('auth.admin.products')->resource('products', ProductsController::class);
 });
