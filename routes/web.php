@@ -6,7 +6,7 @@ use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\CategoriesController;
 use PhpParser\Node\Expr\Cast;
 use App\Http\Controllers\admin\Dashboard;
-
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +44,8 @@ use App\Http\Controllers\admin\Dashboard;
 
 
 // Client route
-Route::prefix('categories')->group(function () {
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.admin');
+Route::middleware('auth.admin')->prefix('categories')->group(function () {
     // danh sach chuyen muc
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
     // lay chi tiet 1 chuyen muc
@@ -58,9 +59,10 @@ Route::prefix('categories')->group(function () {
     // xoa chuyen muc
     Route::delete('/delete/{id}')->name('categories.delete');
 });
+Route::get('san-pham/{id}', [HomeController::class, 'getProductDetail']);
 
 // admin route
-Route::prefix('admin')->group(function () {
+Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::get('/', [Dashboard::class, 'index']);
-    Route::middleware('auth.admin.products')->resource('products', ProductsController::class);
+    Route::resource('products', ProductsController::class)->middleware('auth.admin.product');
 });

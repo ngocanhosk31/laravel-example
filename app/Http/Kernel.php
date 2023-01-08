@@ -69,6 +69,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-
+        // auth.admin chinh la route (url) goi o ben web.php
+        'auth.admin' => \App\Http\Middleware\CheckLoginAdmin::class,
+        'auth.admin.product' => \App\Http\Middleware\ProductsPermission::class,
     ];
 }
