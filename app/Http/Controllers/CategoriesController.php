@@ -50,9 +50,19 @@ class CategoriesController extends Controller
         // echo $id;
         // $input = $request->input();
         // dd($input);
-        $id = $request->id;
-        dd($id);
+        // $idValue = $request->id;
+        // dd($idValue);
+        // dd($request);
+        //tham so thu 2 la gia tri mac dinh neu name null
+        // $name = request('name', 'ngoc anh');
+        // dd($name);
+        // $idValue = $request->query('id');
+        // dd($idValue);
+        //tra ve array
+        $query = $request->query();
+        dd($query);
         return view('clients/categories/list');
+
     }
     public function getCategory($id)
     {
@@ -65,24 +75,70 @@ class CategoriesController extends Controller
     //    show form add (GET)
     public function addCategory(Request $request)
     {
-        $path = $request->path();
-        echo $path;
-        return view('clients/categories/add');
+        // $path = $request->path();
+        // echo $path;
+        $cateName = $request->old('category_name');
+
+        return view('clients/categories/add', compact('cateName'));
     }
     //method post
     public function handleAddCategory(Request $request)
     {
-        $allDate = $request->all(); //tra ve array
+        // $allDate = $request->all(); //tra ve array
 
-        // dd($allDate);
-        if ($request->isMethod('post')) {
-            echo 'phuong thuc post';
-        }
+        //  dd($allDate);
+        // if ($request->isMethod('post')) {
+        //     echo 'phuong thuc post';
+        // }
         // return 'Submit them chuyen muc: ';
         // return redirect(route('categories.add'));
+        //dung query chi lay duoc tren url -> get
+        //$cateName = $request->category_name;
+        if ($request->has('category_name')) {
+            $cateName = $request->category_name;
+            $request->flash(); //set session flass
+            return redirect(route('categories.add'));
+        } else {
+            return 'khong co category_name';
+        }
+
     }
     public function deleteCategory($id)
     {
+
         return 'Submit xoa chuyen muc: ' . $id;
+    }
+    //xu ly lay thong tin file
+    public function handleFile(Request $request)
+    {
+        // $file = $request->file('photo');
+        if ($request->hasFile('photo')) {
+            if ($request->photo->isValid()) {
+
+                $file = $request->photo;
+                // $path = $file->path();
+                //chuyen file tu bo nho tam ve local->trong project cua ta, param thu 2 k co gi thi default la local
+                // $path = $file->store('images');
+                //doi ten luu cua file
+                //$path = $file->storeAs('file_has_name', 'file_pdf');
+                //lay ten file goc
+                // $fileName = $file->getClientOriginalName();
+                //doi ten file
+                $ext = $file->extension();
+                $fileName = md5(uniqid()) . '.' . $ext;
+                // dd($ext);
+                // dd($path);
+                phpdd($fileName);
+            } else {
+                return 'upload k thanh cong';
+            }
+        } else {
+            return 'vui long chon file';
+        }
+
+    }
+    public function getFile()
+    {
+        return view('clients.categories.file');
     }
 }

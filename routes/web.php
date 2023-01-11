@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriesController;
 use PhpParser\Node\Expr\Cast;
 use App\Http\Controllers\admin\Dashboard;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ use App\Http\Controllers\HomeController;
 
 
 // Client route
-Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.admin');
+// Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.admin');
 Route::middleware('auth.admin')->prefix('categories')->group(function () {
     // danh sach chuyen muc
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
@@ -58,6 +59,10 @@ Route::middleware('auth.admin')->prefix('categories')->group(function () {
     Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
     // xoa chuyen muc
     Route::delete('/delete/{id}')->name('categories.delete');
+    // xu ly file
+    Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.upload');
+    //hien thi form upload
+    Route::get('/upload', [CategoriesController::class, 'getFile']);
 });
 Route::get('san-pham/{id}', [HomeController::class, 'getProductDetail']);
 
@@ -66,3 +71,4 @@ Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::get('/', [Dashboard::class, 'index']);
     Route::resource('products', ProductsController::class)->middleware('auth.admin.product');
 });
+Route::get('/', [TestController::class, 'index']);
