@@ -19,6 +19,7 @@ class HomeController extends Controller
         // ];
 
         $this->data['title'] = 'Trang chu 123';
+        $this->data['message'] = 'Dang ki tai khoan thanh cong';
         // ham compact gom cac bien vao mang
         // neu k dung compac thi gom thu cong nhu tren => dua vao mang $dataView => truyen $dataView vao view() 
         // thuong se dung compact nhieu hon

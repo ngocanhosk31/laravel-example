@@ -9,5 +9,6 @@
 @endsection --}}
 @section('content')
 <h1>Produc</h1>
+<x-package-alert />
 @endsection
     
