@@ -1,16 +1,13 @@
-
-
-
 @extends('layouts.client')
 @section('title')
     {{$title}} 
 @endsection
 {{-- trong cung 1 section => co parent se hien cua ca cha va con, k co cha se bi ghi de --}}
-@section('sidebar')
+{{-- @section('sidebar')
 @parent
 <h3>Home sidebar</h3>
-@endsection
+@endsection --}}
 @section('content')
-        <h1>Trang chu</h1>
-@endsection 
+<h1>Produc</h1>
+@endsection
     
