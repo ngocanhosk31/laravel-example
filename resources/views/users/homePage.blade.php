@@ -22,7 +22,7 @@
         @endenv --}}
         {{-- truyen bien type o Alert va alert
             co bao nhieu bien thi truyen vao nhu duoi --}}
-            {{-- bien dang nhu java => vao day chuyen dang dau -  --}}
+            {{-- bien dang nhu java => vao day chuyen dang dau ---}}
         <x-package-alert type="info" content="Dat hang thanh cong" data-Icon="facebook"/>
         <x-package-alert type="info" :content="$title"/>
         <x-package-alert type="success" :content="$message"/>

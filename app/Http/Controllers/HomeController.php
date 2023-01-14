@@ -60,4 +60,13 @@ class HomeController extends Controller
     {
         dd($request);
     }
+    public function getArray()
+    {
+        $contentArray = [
+            'name' => 'Laravel 8.x',
+            'lesson' => 'Khoa hoc lap trinh Laravel',
+            'academy' => 'Anh cute'
+        ];
+        return $contentArray;
+    }
 }

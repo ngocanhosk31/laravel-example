@@ -48,8 +48,18 @@ use App\Http\Controllers\TestController;
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.admin');
 Route::get('/san-pham', [HomeController::class, 'products'])->name('product');
 Route::get('/them-san-pham', [HomeController::class, 'getAdd']);
-// Route::post('/them-san-pham', [HomeController::class, 'postAdd']);
+Route::post('/them-san-pham', [HomeController::class, 'postAdd']);
 Route::put('/them-san-pham', [HomeController::class, 'putAdd']);
+Route::get('demo-response', function () {
+
+    $contentArray = [
+        'name' => 'Laravel 8.x',
+        'lesson' => 'Khoa hoc lap trinh Laravel',
+        'academy' => 'Anh cute'
+    ];
+    return $contentArray;
+});
+Route::get('lay-thong-tin', [HomeController::class, 'getArray']);
 Route::middleware('auth.admin')->prefix('categories')->group(function () {
     // danh sach chuyen muc
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
