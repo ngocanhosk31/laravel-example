@@ -8,6 +8,9 @@ use PhpParser\Node\Expr\Cast;
 use App\Http\Controllers\admin\Dashboard;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
+use Illuminate\Http\Response;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +55,21 @@ Route::post('/them-san-pham', [HomeController::class, 'postAdd']);
 Route::put('/them-san-pham', [HomeController::class, 'putAdd']);
 Route::get('demo-response', function () {
 
-    $contentArray = [
-        'name' => 'Laravel 8.x',
-        'lesson' => 'Khoa hoc lap trinh Laravel',
-        'academy' => 'Anh cute'
-    ];
-    return $contentArray;
+    // $response = new Response();
+    // dd($response);
+    // Su dung helper
+    // dd(response());
+    // $content = '<h2>Hoc lap trinh</h2>';
+    // $response = new Response('Hoc lap trinh', 200);
+    //thay doi header o inspect
+    // $response = response($content)->header('Content-Type', 'text/plain');
+    $content = json_encode([
+        'Item1',
+        'Item2',
+        'Item3'
+    ]);
+    $response = response($content)->header('Content-Type', 'application/json');
+    return $response;
 });
 Route::get('lay-thong-tin', [HomeController::class, 'getArray']);
 Route::middleware('auth.admin')->prefix('categories')->group(function () {
