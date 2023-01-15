@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\Dashboard;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 
 
@@ -63,14 +64,48 @@ Route::get('demo-response', function () {
     // $response = new Response('Hoc lap trinh', 200);
     //thay doi header o inspect
     // $response = response($content)->header('Content-Type', 'text/plain');
-    $content = json_encode([
-        'Item1',
-        'Item2',
-        'Item3'
-    ]);
-    $response = response($content)->header('Content-Type', 'application/json');
-    return $response;
+    // $content = json_encode([
+    //     'Item1',
+    //     'Item2',
+    //     'Item3'
+    // ]);
+    // $response = response($content)->header('Content-Type', 'application/json');
+    // don vi trong cookie -> phut
+    // $response = (new Response())->cookie('Anh_cute', 'Hoc lap trinh - Laravel', 30);
+    // return $response;
+    // return view('demo-test');
+    // $response = response()
+    //     ->view('demo-test', [
+    //         'title' => 'Hoc HTTP response'
+    //     ], 201)
+    //     ->header('Content-Type', 'application/json')
+    //     ->header('API-Key', '123456');
+    // return $response;
+    // $contentArray = [
+    //     'name' => 'Laravel 8.x',
+    //     'lesson' => 'Khoa hoc lap trinh Laravel',
+    //     'academy' => 'Anh cute'
+    // ];
+    // // return $contentArray;
+    // return response()->json($contentArray, 201)->header('API-Key', '1234');
+    // return '<h2>Welcome to ANh_cute</h2>';
+    //co the chuyen old qua form
+    // echo old('username');
+    return view('demo-test');
+})->name('demo-response');
+Route::post('demo-response', function (Request $request) {
+    if (!empty($request->username)) {
+        // return redirect()->route('demo-response');
+        // return redirect(route('demo-response'));
+        return back()->withInput()->with('mess', 'Validate thanh cong');
+    }
+    return redirect(route('demo-response'))->with('mess', 'Validate khong thanh cong');
 });
+Route::get('demo-response-2', function (Request $request) {
+    // return $request->cookie('Anh_cute');
+
+});
+
 Route::get('lay-thong-tin', [HomeController::class, 'getArray']);
 Route::middleware('auth.admin')->prefix('categories')->group(function () {
     // danh sach chuyen muc
