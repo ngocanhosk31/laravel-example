@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
     public function __construct()
     {
         // echo 'products khoi dong';
@@ -17,6 +18,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         //

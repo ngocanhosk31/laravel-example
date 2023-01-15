@@ -6,6 +6,11 @@ use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\CategoriesController;
 use PhpParser\Node\Expr\Cast;
 use App\Http\Controllers\admin\Dashboard;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+
 
 
 /*
@@ -44,7 +49,65 @@ use App\Http\Controllers\admin\Dashboard;
 
 
 // Client route
-Route::prefix('categories')->group(function () {
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.admin');
+Route::get('/san-pham', [HomeController::class, 'products'])->name('product');
+Route::get('/them-san-pham', [HomeController::class, 'getAdd']);
+Route::post('/them-san-pham', [HomeController::class, 'postAdd']);
+Route::put('/them-san-pham', [HomeController::class, 'putAdd']);
+Route::get('demo-response', function () {
+
+    // $response = new Response();
+    // dd($response);
+    // Su dung helper
+    // dd(response());
+    // $content = '<h2>Hoc lap trinh</h2>';
+    // $response = new Response('Hoc lap trinh', 200);
+    //thay doi header o inspect
+    // $response = response($content)->header('Content-Type', 'text/plain');
+    // $content = json_encode([
+    //     'Item1',
+    //     'Item2',
+    //     'Item3'
+    // ]);
+    // $response = response($content)->header('Content-Type', 'application/json');
+    // don vi trong cookie -> phut
+    // $response = (new Response())->cookie('Anh_cute', 'Hoc lap trinh - Laravel', 30);
+    // return $response;
+    // return view('demo-test');
+    // $response = response()
+    //     ->view('demo-test', [
+    //         'title' => 'Hoc HTTP response'
+    //     ], 201)
+    //     ->header('Content-Type', 'application/json')
+    //     ->header('API-Key', '123456');
+    // return $response;
+    // $contentArray = [
+    //     'name' => 'Laravel 8.x',
+    //     'lesson' => 'Khoa hoc lap trinh Laravel',
+    //     'academy' => 'Anh cute'
+    // ];
+    // // return $contentArray;
+    // return response()->json($contentArray, 201)->header('API-Key', '1234');
+    // return '<h2>Welcome to ANh_cute</h2>';
+    //co the chuyen old qua form
+    // echo old('username');
+    return view('demo-test');
+})->name('demo-response');
+Route::post('demo-response', function (Request $request) {
+    if (!empty($request->username)) {
+        // return redirect()->route('demo-response');
+        // return redirect(route('demo-response'));
+        return back()->withInput()->with('mess', 'Validate thanh cong');
+    }
+    return redirect(route('demo-response'))->with('mess', 'Validate khong thanh cong');
+});
+Route::get('demo-response-2', function (Request $request) {
+    // return $request->cookie('Anh_cute');
+
+});
+
+Route::get('lay-thong-tin', [HomeController::class, 'getArray']);
+Route::middleware('auth.admin')->prefix('categories')->group(function () {
     // danh sach chuyen muc
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
     // lay chi tiet 1 chuyen muc
@@ -57,10 +120,16 @@ Route::prefix('categories')->group(function () {
     Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
     // xoa chuyen muc
     Route::delete('/delete/{id}')->name('categories.delete');
+    // xu ly file
+    // Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.upload');
+    //hien thi form upload
+    Route::get('/upload', [CategoriesController::class, 'getFile']);
 });
+Route::get('san-pham/{id}', [HomeController::class, 'getProductDetail']);
 
 // admin route
-Route::prefix('admin')->group(function () {
+Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::get('/', [Dashboard::class, 'index']);
-    Route::resource('products', ProductsController::class);
+    Route::resource('products', ProductsController::class)->middleware('auth.admin.product');
 });
+// Route::get('/', [TestController::class, 'index']);

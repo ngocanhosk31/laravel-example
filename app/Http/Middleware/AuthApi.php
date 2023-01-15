@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckLoginAdmin
+class AuthApi
 {
     /**
      * Handle an incoming request.
@@ -16,17 +16,7 @@ class CheckLoginAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        // echo 'middleware request';
-        if (!$this->isLogin()) {
-            return redirect(route('home'));
-        }
-        if ($request->is('admin') || $request->is('admin/*')) {
-            echo '<h3>Khu vuc quan tri</h3>';
-        }
+        echo 'request api';
         return $next($request);
-    }
-    public function isLogin()
-    {
-        return true;
     }
 }
